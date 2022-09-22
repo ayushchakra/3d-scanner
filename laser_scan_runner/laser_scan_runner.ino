@@ -2,8 +2,8 @@
 Servo servo_pan;
 Servo servo_tilt;
 int pos = 0;
-int pan_bound = 40;
-int tilt_bound = 20;
+int pan_bound = 10;
+int tilt_bound = 2;
 int sensor_pin = A0;
 
 void setup() {
@@ -13,6 +13,7 @@ void setup() {
   pinMode(A0, INPUT);
 
   Serial.begin(9600);
+
   servo_pan.write(90-pan_bound);
   servo_tilt.write(90-tilt_bound);
   delay(1000);
@@ -21,22 +22,26 @@ void setup() {
     delay(50);
     for (int pan_angle = 90-pan_bound; pan_angle <= 90 + pan_bound; pan_angle++) {
       servo_pan.write(pan_angle);
-      Serial.println(String(pan_angle) + " " + String(tilt_angle) + " " + String(analogRead(sensor_pin)));
+      int sensor_value = analogRead(sensor_pin);
+      Serial.println(String(pan_angle) + " " + String(tilt_angle) + " " + String(sensor_value));
       delay(50);
     }
     tilt_angle++;
     servo_tilt.write(tilt_angle);
     delay(50);
-    for (int pan_angle = 90+pan_bound; pan_angle >= 90 - pan_bound; pan_bound--){
+    for (int pan_angle = 90+pan_bound; pan_angle >= 90 - pan_bound; pan_angle--){
       servo_pan.write(pan_angle);
-      Serial.println("pan_angle: " + String(pan_angle) + " tilt_angle: " + String(tilt_angle)\
-        + " sensor_output: " + String(analogRead(sensor_pin)));
+      int sensor_value = analogRead(sensor_pin);
+      Serial.println(String(pan_angle) + " " + String(tilt_angle) + " " + String(sensor_value));
       delay(50);
     }
   }
+  Serial.println('stop');
+  
 }
 
 void loop() {
+
   // put your main code here, to run repeatedly:
 
   //  servo_1.write(0);
