@@ -1,10 +1,10 @@
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 import numpy as np
-from helper import *
+from helper import initialize_serial
 
 
-def processSerialInput(serial_port):
+def process_serial_input(serial_port):
     """
     This function listens to the serial port (object inputted to the function)
     and processes each analog reading into a distance using the calculated
@@ -50,7 +50,7 @@ def processSerialInput(serial_port):
     return angle_dists
 
 
-def plotScan(angle_dists):
+def plot_scan(angle_dists):
     """
     This function visualizes the angle distance pairs form the one servo sweep.
     It takes in a 2D array of angles and distances.
@@ -67,5 +67,5 @@ def plotScan(angle_dists):
 
 if __name__ == "__main__":
     serial_port = initialize_serial()
-    angle_dists = processSerialInput(serial_port)
-    plotScan(np.array(angle_dists))
+    angle_dists = process_serial_input(serial_port)
+    plot_scan(np.array(angle_dists))

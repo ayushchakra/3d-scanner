@@ -5,7 +5,7 @@ import numpy as np
 from helper import *
 
 
-def processSerialInput(serial_port):
+def process_serial_input(serial_port):
     """
     This function listens to the serial port (object inputted to the function)
     and processes each line by converting the analog signal, pan angle, and
@@ -68,7 +68,7 @@ def processSerialInput(serial_port):
     return coordinates
 
 
-def plotScan(coordinates):
+def plot_scan(coordinates):
     """
     This function visualizes the results from the 3D scan. It takes in a 2D
     numpy array of X coordinates, Y coordinates, and Z coordinates.
@@ -87,5 +87,5 @@ def plotScan(coordinates):
 
 if __name__ == "__main__":
     serial_port = initialize_serial()
-    coordinates = processSerialInput(serial_port)
-    plotScan(np.array(coordinates))
+    coordinates = process_serial_input(serial_port)
+    plot_scan(np.array(coordinates))

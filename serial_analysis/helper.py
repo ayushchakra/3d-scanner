@@ -11,8 +11,8 @@ def initialize_serial():
     # Sets the Baud Rate of the expected serial input
     baud_rate = 9600
     # Establishes the connected to the serial port
-    serialPort = serial.Serial(arduino_port, baud_rate, timeout=1)
-    return serialPort
+    serial_port = serial.Serial(arduino_port, baud_rate, timeout=1)
+    return serial_port
 
 
 START_ANGLE = 90
