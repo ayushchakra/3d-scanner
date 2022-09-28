@@ -30,11 +30,9 @@ def process_serial_input(serial_port):
             # handle if the inputted signal is missing values
             try:
                 # Infrared Sensor analog reading
-                analog_output = int(data.split(">")[-1].split()[2])
-                # Orientation of Pan Servo
+                analog_output = int(data.split(">")[-1].split()[1])
+                # Orientation of Servo (tilt)
                 theta = int(data.split(">")[-1].split()[0])
-                # Orientation of Tilt Servo
-                phi = int(data.split(">")[-1].split()[1])
             except IndexError:
                 continue
 
@@ -45,8 +43,7 @@ def process_serial_input(serial_port):
             if distance < 0.1 or distance > 1.5:
                 continue
 
-            # phi can be changed with theta to analyze tilt vs. distance
-            angle_dists.append([phi, distance])
+            angle_dists.append([theta, distance])
     return angle_dists
 
 

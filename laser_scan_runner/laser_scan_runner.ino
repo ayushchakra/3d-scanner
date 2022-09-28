@@ -4,7 +4,7 @@ Servo servo_pan;
 Servo servo_tilt;
 
 // Define sensor and servo pins
-int sensor_pin = A0;
+int infrared_sensor_pin = A0;
 int servo_pan_pin = 9;
 int servo_tilt_pin = 11;
 
@@ -25,7 +25,7 @@ void setup() {
   servo_tilt.attach(servo_tilt_pin);
   
   // Initialize A0 to receive analog signals from infrared sensor
-  pinMode(A0, INPUT);
+  pinMode(infrared_sensor_pin, INPUT);
 
   // Starts serial output to send to backend python 
   Serial.begin(9600);
