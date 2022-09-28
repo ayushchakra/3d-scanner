@@ -1,35 +1,17 @@
-import serial
 import math
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 import numpy as np
-
-START_ANGLE = 90
-
-
-def initialize_serial():
-    """
-    This function intitializes the serial connection to the arduino and returns
-    a serial object that can be used to read serial messages.
-    """
-    # USB port that is connected to the Arduino
-    arduinoPort = "/dev/ttyACM0"
-    # Sets the Baud Rate of the expected serial input
-    baudRate = 9600
-    # Establishes the connected to the serial port
-    serialPort = serial.Serial(arduinoPort, baudRate, timeout=1)
-    return serialPort
+from helper import *
 
 
-def processSerialInput(serialPort):
+def processSerialInput(serial_port):
     """
     This function listens to the serial port (object inputted to the function)
     and processes each line by converting the analog signal, pan angle, and
     tilt angle into a list of x, y, and z coordinates.
     """
-
     coordinates = []
-    angle_dists = []
 
     # While loop handles the listener on the serial port and terminates when
     # the 'stop' message is received
@@ -37,23 +19,23 @@ def processSerialInput(serialPort):
         # Reading the serial port is nested into a try and except statement
         # to avoid fatal errors associated with decoding errors
         try:
-            lineOfData = serialPort.readline().decode()
+            data = serial_port.readline().decode()
         except UnicodeDecodeError:
             continue
-        if len(lineOfData) > 0:
+        if len(data) > 0:
             # If '28528' is received (which represents stop), stop execution of
             # the while loop
-            if "28528" in lineOfData:
+            if "28528" in data:
                 break
             # Splitting the signal is nested in a try and except statement to
             # handle if the inputted signal is missing values
             try:
                 # Infrared Sensor analog reading
-                analog_output = int(lineOfData.split(">")[-1].split()[2])
+                analog_output = int(data.split(">")[-1].split()[2])
                 # Orientation of Pan Servo
-                theta = int(lineOfData.split(">")[-1].split()[0])
+                theta = int(data.split(">")[-1].split()[0])
                 # Orientation of Tilt Servo
-                phi = int(lineOfData.split(">")[-1].split()[1])
+                phi = int(data.split(">")[-1].split()[1])
             except IndexError:
                 continue
 
@@ -98,11 +80,12 @@ def plotScan(coordinates):
     ax.set_xlabel("X (meters)")
     ax.set_ylabel("Y (meters)")
     ax.set_zlabel("Z (meters)")
+    ax.set_title("3D Scan")
 
     plt.show()
 
 
 if __name__ == "__main__":
-    serialPort = initialize_serial()
-    coordinates = processSerialInput()
+    serial_port = initialize_serial()
+    coordinates = processSerialInput(serial_port)
     plotScan(np.array(coordinates))
