@@ -3,7 +3,7 @@ import serial
 
 def initialize_serial():
     """
-    This function intitializes the serial connection to the arduino and returns
+    This function initializes the serial connection to the arduino and returns
     a serial object that can be used to read serial messages.
     """
     # USB port that is connected to the Arduino

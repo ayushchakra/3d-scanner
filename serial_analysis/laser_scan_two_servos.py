@@ -49,7 +49,7 @@ def process_serial_input(serial_port):
                 continue
 
             # Converts distance, theta, phi into X, Y, Z coordinates using
-            # equations that map spherical coordinates to cartesian coordiantes
+            # equations that map spherical coordinates to cartesian coordinates
             # The origin of this reference frame is the center of the infrared
             # sensor. Z is up, Y is out of the sensor, and X is left of sensor
             x = (
